@@ -4,6 +4,7 @@ Iterator Includes
 A TC39 proposal to allow the developer to ask whether an iterator yields a given value. Analogue to `Array.prototype.includes`.
 
 **Stage: 0**
+
 **Specification:** https://tc39.es/proposal-iterator-includes/
 
 ## presentations to committee
