@@ -5,7 +5,7 @@ A TC39 proposal to allow the developer to ask whether an iterator yields a given
 
 **Stage: 0**
 
-**Specification:** https://tc39.es/proposal-iterator-includes/
+**Specification:** [https://michaelficarra.github.io/proposal-iterator-includes](https://michaelficarra.github.io/proposal-iterator-includes)
 
 ## presentations to committee
 
