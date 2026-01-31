@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "proposal-iterator-includes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "spec": "ecmarkup --mark-effects --load-biblio @tc39/ecma262-biblio --write-biblio biblio.json --lint-spec --strict spec.emu --assets-dir dist dist/index.html",
+    "test": "node --test test/index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tc39/proposal-iterator-includes.git"
+  },
+  "author": "Michael Ficarra",
+  "bugs": {
+    "url": "https://github.com/tc39/proposal-iterator-includes/issues"
+  },
+  "homepage": "https://github.com/tc39/proposal-iterator-includes#readme",
+  "devDependencies": {
+    "@tc39/ecma262-biblio": "2.1.3018",
+    "ecmarkup": "23.0.2",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf8">
+<pre class="metadata">
+title: Iterator Includes
+status: proposal
+stage: 0
+contributors: Michael Ficarra
+location: https://tc39.es/proposal-iterator-includes/
+copyright: false
+</pre>
+
+<emu-clause id="sec-iterator.prototype.includes">
+  <h1>Iterator.prototype.includes ( _searchElement_ )</h1>
+  <emu-alg>
+    1. Let _O_ be the *this* value.
+    1. If _O_ is not an Object, throw a *TypeError* exception.
+    1. Let _iterated_ be ? GetIteratorDirect(_O_).
+    1. Repeat,
+      1. Let _value_ be ? IteratorStepValue(_iterated_).
+      1. If _value_ is ~done~, return *false*.
+      1. If SameValueZero(_value_, _searchElement_) is *true*, return ? IteratorClose(_iterated_, NormalCompletion(*true*)).
+  </emu-alg>
+</emu-clause>
