@@ -10,14 +10,24 @@ copyright: false
 </pre>
 
 <emu-clause id="sec-iterator.prototype.includes">
-  <h1>Iterator.prototype.includes ( _searchElement_ )</h1>
+  <h1>Iterator.prototype.includes ( _searchElement_ [ , _skippedElements_ ] )</h1>
   <emu-alg>
     1. Let _O_ be the *this* value.
     1. If _O_ is not an Object, throw a *TypeError* exception.
+    1. If _skippedElements_ is *undefined*, then
+      1. Let _toSkip_ be 0.
+    1. Else,
+      1. If _skippedElements_ is not one of *+∞<sub>𝔽</sub>*, *-∞<sub>𝔽</sub>*, or an integral Number, throw a *TypeError* exception.
+      1. Let _toSkip_ be the extended mathematical value of _skippedElements_.
+    1. If _toSkip_ &lt; 0, throw a *RangeError* exception.
+    1. Let _skipped_ be 0.
     1. Let _iterated_ be ? GetIteratorDirect(_O_).
     1. Repeat,
       1. Let _value_ be ? IteratorStepValue(_iterated_).
       1. If _value_ is ~done~, return *false*.
-      1. If SameValueZero(_value_, _searchElement_) is *true*, return ? IteratorClose(_iterated_, NormalCompletion(*true*)).
+      1. If _skipped_ &lt; _toSkip_, then
+        1. Set _skipped_ to _skipped_ + 1.
+      1. Else,
+        1. If SameValueZero(_value_, _searchElement_) is *true*, return ? IteratorClose(_iterated_, NormalCompletion(*true*)).
   </emu-alg>
 </emu-clause>

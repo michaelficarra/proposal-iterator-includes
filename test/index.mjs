@@ -75,6 +75,104 @@ test('closes iterator', async t => {
   assert.equal(closed, true);
 });
 
+test('skipped elements', async t => {
+  await test('negative integral', async t => {
+    assert.throws(() => {
+      [].values().includes(0, -1);
+    }, RangeError);
+  });
+
+  await test('negative non-integral', async t => {
+    assert.throws(() => {
+      [].values().includes(0, -0.1);
+    }, TypeError);
+  });
+
+  await test('negative infinity', async t => {
+    assert.throws(() => {
+      [].values().includes(0, -2e308);
+    }, RangeError);
+  });
+
+  await test('zero', async t => {
+    assert.equal([4, 5, 6, 7].values().includes(8, 0), false);
+    assert.equal([4, 5, 6, 7].values().includes(7, 0), true);
+    assert.equal([4, 5, 6, 7].values().includes(6, 0), true);
+    assert.equal([4, 5, 6, 7].values().includes(5, 0), true);
+    assert.equal([4, 5, 6, 7].values().includes(4, 0), true);
+    assert.equal([4, 5, 6, 7].values().includes(3, 0), false);
+
+    assert.equal([4, 5, 6, 7].values().includes(8, -0), false);
+    assert.equal([4, 5, 6, 7].values().includes(7, -0), true);
+    assert.equal([4, 5, 6, 7].values().includes(6, -0), true);
+    assert.equal([4, 5, 6, 7].values().includes(5, -0), true);
+    assert.equal([4, 5, 6, 7].values().includes(4, -0), true);
+    assert.equal([4, 5, 6, 7].values().includes(3, -0), false);
+  });
+
+  await test('positive integral', async t => {
+    assert.equal([4, 5, 6, 7].values().includes(4, 1), false);
+    assert.equal([4, 5, 6, 7].values().includes(4, 2), false);
+    assert.equal([4, 5, 6, 7].values().includes(4, 3), false);
+    assert.equal([4, 5, 6, 7].values().includes(4, 4), false);
+    assert.equal([4, 5, 6, 7].values().includes(4, 5), false);
+
+    assert.equal([4, 5, 6, 7].values().includes(5, 1), true);
+    assert.equal([4, 5, 6, 7].values().includes(5, 2), false);
+    assert.equal([4, 5, 6, 7].values().includes(5, 3), false);
+    assert.equal([4, 5, 6, 7].values().includes(5, 4), false);
+    assert.equal([4, 5, 6, 7].values().includes(5, 5), false);
+
+    assert.equal([4, 5, 6, 7].values().includes(6, 1), true);
+    assert.equal([4, 5, 6, 7].values().includes(6, 2), true);
+    assert.equal([4, 5, 6, 7].values().includes(6, 3), false);
+    assert.equal([4, 5, 6, 7].values().includes(6, 4), false);
+    assert.equal([4, 5, 6, 7].values().includes(6, 5), false);
+
+    assert.equal([4, 5, 6, 7].values().includes(7, 1), true);
+    assert.equal([4, 5, 6, 7].values().includes(7, 2), true);
+    assert.equal([4, 5, 6, 7].values().includes(7, 3), true);
+    assert.equal([4, 5, 6, 7].values().includes(7, 4), false);
+    assert.equal([4, 5, 6, 7].values().includes(7, 5), false);
+  });
+
+  await test('positive non-integral', async t => {
+    assert.throws(() => {
+      [].values().includes(0, 0.1);
+    }, TypeError);
+  });
+
+  await test('positive infinity', async t => {
+    let closed = false;
+    let i = 0;
+    let iter = {
+      __proto__: Iterator.prototype,
+      next() {
+        ++i;
+        if (i < 1000) {
+          return { value: i, done: false };
+        } else {
+          closed = true;
+          return { value: undefined, done: true };
+        }
+      },
+      return() {
+        closed = true;
+        return { value: undefined, done: true };
+      },
+    };
+
+    assert.equal(iter.includes(1, Infinity), false);
+    assert.equal(closed, true);
+  });
+
+  await test('non-numeric', async t => {
+    assert.throws(() => {
+      [].values().includes(0, { valueOf() { return 0; } });
+    }, TypeError);
+  });
+});
+
 test('name', async t => {
   assert.equal(Iterator.prototype.includes.name, 'includes');
 });
