@@ -1612,5 +1612,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let sdoMap = JSON.parse(`{}`);
-let biblio = JSON.parse(`{"refsByClause":{},"entries":[{"type":"clause","id":"sec-iterator.prototype.includes","title":"Iterator.prototype.includes ( searchElement )","titleHTML":"Iterator.prototype.includes ( <var>searchElement</var> )","number":"1"}]}`);
+let biblio = JSON.parse(`{"refsByClause":{},"entries":[{"type":"clause","id":"sec-iterator.prototype.includes","title":"Iterator.prototype.includes ( searchElement [ , skippedElements ] )","titleHTML":"Iterator.prototype.includes ( <var>searchElement</var> [ , <var>skippedElements</var> ] )","number":"1"}]}`);
 ;let usesMultipage = false
