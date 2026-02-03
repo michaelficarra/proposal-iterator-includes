@@ -39,11 +39,14 @@ stronger than choosing SameValueZero to match `Array.prototype.includes`.
 `Array.prototype.includes` has a second parameter that starts the search from
 the given index instead of the beginning of the Array. This makes sense for the
 Array API because the alternative (slicing first) would first allocate another
-Array and then perform a copy from that index. But Iterators have `drop` which
-is a constant time/space operation, so there's no need to include this
-parameter. That being said, it *could* be included to mirror the Array API, but
-I don't think it's worth it. Additionally, if it was included, it would have to
-reject negative values, which would be an unnecessarily surprising difference.
+Array and then perform a copy from that index. Iterators have `drop`, so it's
+unnecessary to include this parameter, but to avoid confusion for somebody who
+is already familiar with the Array method, we choose to include it.
+Unfortunately, there is still a difference in the interfaces because the
+Iterator method cannot accept negative offsets, which would be a surprising
+difference, but one that makes sense in context. Alternatively, we could throw
+if a second argument is ever provided, but that would be a highly unusual
+behaviour among JavaScript built-ins.
 
 ## chosen solution
 
